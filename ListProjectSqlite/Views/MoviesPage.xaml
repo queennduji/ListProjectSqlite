@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ListProjectSqlite.Views.MoviesPage"
+             Title="MoviesPage">
+    <StackLayout Padding="20,10,20,10">
+
+        <Grid  HorizontalOptions="FillAndExpand"
+               ColumnDefinitions="*,*">
+            <Label Text="Name of Movie"
+                   FontSize="24"
+                   FontFamily="Bold"
+                   HorizontalOptions="FillAndExpand" />
+            <Label Text="Genre of Movie"
+                   FontSize="24"
+                   FontFamily="Bold"
+                   Grid.Column="1"
+                   HorizontalOptions="End"/>
+        </Grid>
+        <ListView ItemsSource="{Binding Movies}"
+                  SelectedItem="{Binding SelectedMovie}"
+                  x:Name="MoviesListView"
+                  HorizontalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid  HorizontalOptions="FillAndExpand"
+                               ColumnDefinitions="*,*">
+                            <Label Text="{Binding Name}"
+                                   FontSize="16"
+                                   VerticalOptions="Center" />
+                            <Label Text="{Binding Genre}"
+                                   FontSize="16" FontFamily="Bold"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalOptions="Center"
+                                   Grid.Column="1"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+        <StackLayout Margin="0,20"
+                     Spacing="10">
+            <Entry Placeholder="Name"
+                   Text="{Binding NewMovieName}" />
+            <Entry Placeholder="Genre"
+                   Text="{Binding NewMovieGenre}" />
+        </StackLayout>
+
+        <StackLayout Spacing="10">
+            <Button Text="Add Movie"
+                    Command="{Binding AddMovieCommand}"
+                    CornerRadius="0"/>
+
+            <Button Text="Update Movie"
+                    Command="{Binding UpdateMovieCommand}"
+                    CommandParameter="{Binding SelectedMovie}"
+                    CornerRadius="0"/>
+
+            <Button Text="Delete Movie"
+                    Command="{Binding DeleteMovieCommand}"
+                    CommandParameter="{Binding SelectedMovie.Id}"
+                    CornerRadius="0" />
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
