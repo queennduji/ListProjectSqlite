@@ -43,7 +43,7 @@ public static class MauiProgram
 
         if (DeviceInfo.Platform == DevicePlatform.Android)
         {
-            baseAddress = "http://10.0.2.2:7291"; // Android emulator uses 10.0.2.2 for localhost
+            baseAddress = "https://10.0.2.2:7291"; // Android emulator uses 10.0.2.2 for localhost
         }
         else
         {
