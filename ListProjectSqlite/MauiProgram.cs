@@ -37,8 +37,10 @@ public static class MauiProgram
             options.UseSqlite($"Data Source={dbPath}");
         });
 
-       // builder.Services.AddScoped<IMovieService, SqlLiteMovieService>();
 
+#if MOCK
+        builder.Services.AddScoped<IMovieService, SqlLiteMovieService>();
+#elif QA
         string baseAddress;
 
         if (DeviceInfo.Platform == DevicePlatform.Android)
@@ -50,20 +52,17 @@ public static class MauiProgram
             baseAddress = "https://localhost:7291"; // Other platforms can use localhost
         }
 
-        // builder.Services.AddScoped<IMovieService, SqliteMovieService>();
-
-        /*Uncomment and comment the dependency injection for 
-         * SqlLiteMovieService if you want to use web api instead 
-         */
-
-        builder.Services.AddTransient<LoggingHandler>();
-
-        builder.Services.AddHttpClient<IMovieService, WebApiService>(client =>
+         builder.Services.AddHttpClient<IMovieService, WebApiService>(client =>
         {
             client.BaseAddress = new Uri(baseAddress);
         })
        .ConfigurePrimaryHttpMessageHandler(() => new CustomHttpClientHandler())
        .AddHttpMessageHandler<LoggingHandler>();
+
+#else
+        builder.Services.AddScoped<IMovieService, SqlLiteMovieService>();
+#endif
+        builder.Services.AddTransient<LoggingHandler>();
 
         builder.Services.AddLogging();
 
